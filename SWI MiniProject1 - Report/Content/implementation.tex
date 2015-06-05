@@ -1,9 +1,5 @@
 \section{Implementation of Essence}
 %todo A description of use context and selected use scenarios (see Essence-book Chapter 13).
-
-
-%todo A discussion of how to implement support for key use scenarios (see Essence-book Chapter 14).
-
 \subsection{Use Context}
 According to \cite[page 83]{essence} the definition of an use context is:
 \begin{center}
@@ -14,7 +10,7 @@ According to \cite[page 83]{essence} the definition of an use context is:
 The use context for our project is a world where smartphones are used while running.
 In this world people listen to music while running, through their smartphones.
 Smartphones have built in accelerometer, GPS, internet access, etc..
-Runners have their smartphones attached to their arms, limiting the view of the smartphones' screen.
+Runners have their smartphones attached to their arms, limiting the view of the smartphones' screens.
 The runners use headphones specialised for running, ensuring they can still hear the traffic while listening to music.
 
 Running can take place both outdoor and indoor on a treadmill.
@@ -30,68 +26,35 @@ Some of these services include beats-per-minute lookup for songs, streaming of m
 
 \subsection{Use Scenarios}
 Given the previously defined use context, there exists several use scenarios.
-Some of these use scenarios are the following:
+Here is a sample of use scenarios:
 
-\paragraph{Start music}~\\ 
-\begin{enumerate}
-	\item Attach the smartphone to the arm.
-	\item Start running.
-	\item Listen while the music start playing.
-\end{enumerate} 
+\begin{itemize}
+	\item When the application is started, it searches predefined directories for new music and adds it to the collection.
+	\item The music starts playing when the runner starts running.
+	\item When the runner stops running for more than a minute, the music stops playing.
+	\item If the runner only stops for less than a minute, the music only pauses.
+	\item While the runner is running, if he mildly changes his pace, the music will adjust its tempo.
+	\item If he instead changes his pace drastically, the song will change.
+	\item While running he/she can tap the screen of the smartphone on his arm to control the music.
+\end{itemize}
 
-\paragraph{Stop music}~\\
-\begin{enumerate}
-	\item Attach the smartphone to the arm.
-	\item Start running.
-	\item Listen while the music start playing.
-	\item Stop running.
-	\item Wait a minute.
-	\item Listen while the music stop playing.
-\end{enumerate} 
+%todo A discussion of how to implement support for key use scenarios (see Essence-book Chapter 14).
+\subsection{Implementation Discussion}
+We will now discuss how the different use scenarios can be implemented in the current use context.
+\begin{itemize}
+	\item It is possible to use a listener to detect when the application starts. When this is detected, a depth-first-search algorithm can be run with start in a predefined directory. If the search finds any new music, it can be added to the collection.
+	
+	\item Given the application runs on a modern smartphone, it is possible to access data from an accelerometer. Based on this data, we can calculate when the runner starts running. When this happens the application can start the music.
+	
+	We will use the accelerometer instead of GPS, because the accelerometer is accessible in both indoor and outdoor environments. Further if the runner used a treadmill, the movement will not be showing on the GPS.
+	
+	\item By using the accelerometer it is also possible to detect when the runner is standing still. We can then start a timer, then depending on the time since standstill, we can either stop the music or pause it.
+	
+	\item The accelerometer can, hence the name, detect changes in acceleration.
+	This can be used to determine if the runner changes his pace, and of what magnitude the change is.
+	Based on this information, we can adjust the tempo of the music or we can change song if needed.
+	
+	\item Utilising the screen listeners will allow for detecting taps, even though the screen is off. This is possible because most smartphones utilised a OLED Display. 
+			
+\end{itemize}
 
-\paragraph{Pause music}~\\
-\begin{enumerate}
-	\item Attach the smartphone to the arm.
-	\item Start running.
-	\item Listen while the music start playing.
-	\item Stop running.
-	\item Wait less than a minute.
-	\item Start running again.
-	\item Listen while the music start playing.
-\end{enumerate} 
-
-\paragraph{Mild pace changes}~\\
-\begin{enumerate}
-	\item Attach the smartphone to the arm.
-	\item Start running.
-	\item Listen while the music start playing.
-	\item Mildly change pace.
-	\item Listen while the music changing tempo to match pace.
-\end{enumerate} 
-
-\paragraph{Drastic pace changes}~\\
-\begin{enumerate}
-	\item Attach the smartphone to the arm.
-	\item Start running.
-	\item Listen while the music start playing.
-	\item Drastically change pace.
-	\item Listen while the song change.
-\end{enumerate} 
-
-\paragraph{Music Player control}~\\
-\begin{enumerate}
-	\item 
-\end{enumerate} 
-
-\paragraph{Automatic addition of songs}~\\
-\begin{enumerate}
-	\item 
-\end{enumerate} 
-
-%start run - start music
-%stop running - stop music
-%pause running for red light - keep playing music
-%change minimal pace - regulate song tempo
-%change drastic pace - change song
-%control musicplayer with taps
-%Automatic adding of song in selected folders
