@@ -40,7 +40,17 @@ Here is a sample of use scenarios:
 	\item While the runner is running, if he mildly changes his pace, the music will adjust its tempo.
 	\item If he instead changes his pace drastically, the song will change.
 	\item While running he/she can tap the screen of the smartphone on his arm to control the music.
+	\item A song does not have an associated BPM value. The phone calculates, and uploads it to a server.
 \end{itemize}
+
+The use cases and actors can be seen in \Cref{fig:useCase}.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{Images/useCase.png}
+    \caption{A use case diagram of some of the use scenarios}
+    \label{fig:useCase}
+\end{figure}
 
 %todo A discussion of how to implement support for key use scenarios (see Essence-book Chapter 14).
 \subsection{Implementation Discussion}
@@ -58,6 +68,7 @@ We will now discuss how the different use scenarios can be implemented in the cu
 	This can be used to determine if the runner changes his pace, and of what magnitude the change is.
 	Based on this information, we can adjust the tempo of the music or we can change song if needed.
 	
-	\item Utilising the screen listeners will allow for detecting taps, even though the screen is off.	
+	\item Utilising the screen listeners will allow for detecting taps, even though the screen is off.
+	
+	\item An algorithm can be used to calculate a BPM value for a song which does not have an associated BPM value. It can then be uploaded to a server for future use by others. 
 \end{itemize}
-
